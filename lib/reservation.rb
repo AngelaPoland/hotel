@@ -1,37 +1,36 @@
 require 'date'
+require 'pry'
 
 module Hotel
 
   class Reservation
 
-    attr_reader :id, :room_num, :cost
-    attr_accessor :start_date, :end_date
+    attr_reader :room_num, :cost
+    attr_accessor :id, :start_date, :end_date
 
     def initialize(input)
+      @id = input[:id] # reservation number
+      @room_num = rand(1..20) # room number 1-20
+      @start_date = input[:start_date] # instance of date
+      @end_date = input[:end_date] # instance of date
+      @cost = cost_of_stay
 
-      @id = input[:id]#reservation number
-      @room_num = rand(1..20) #room number 1-20
-      @cost = cost_of_stay# method to get integer: (date range - 1 day) * 200
-      @start_date = input[:start_date]#instance of date
-      @end_date = input[:end_date]#instance of date
-
-
-      # if @end_date != nil
-      #   if @end_date <= @start_date
-      #     raise ArgumentError.new("Invalid date range.")
-      #   end
-      # end
+      if end_date < start_date
+          raise ArgumentError.new("Check Out date cannot be before or same as Check In date.")
+      end
 
     end # end of initialize
 
     #method to get number of nights to be paid for
     def num_of_nights
-      (start_date - end_date) - 1
+      days = (end_date - start_date).to_i
+      num_of_nights = days - 1
+      return num_of_nights
     end
 
     #method to get cost of stay
     def cost_of_stay
-      num_of_nights * 200
+      num_of_nights * 200.00
     end
 
 

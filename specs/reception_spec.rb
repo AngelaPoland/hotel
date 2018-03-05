@@ -12,9 +12,21 @@ describe "Reception" do
   end
 
   describe "add_reservation" do
-    it "adds a reservation to the reservations" do
+
+    it "creates an instance of Reservation" do
+      start_date = Date.new(2018, 3, 7)
+      end_date = Date.new(2018, 3, 9)
       reception = Hotel::Reception.new
-      
+      reception.add_reservation(start_date, end_date).must_be_instance_of Hotel:: Reservation
+
+    end
+
+    it "adds a reservation to the reservations" do
+      start_date = Date.new(2018, 3, 7)
+      end_date = Date.new(2018, 3, 14)
+      reception = Hotel::Reception.new
+      reception.add_reservation(start_date, end_date)
+      reception.reservations.length.must_equal 1
     end
 
   end

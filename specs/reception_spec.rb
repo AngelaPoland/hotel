@@ -46,9 +46,8 @@ describe "Reception" do
       reception.reservations_by_date(Date.new(2018, 3, 25)).must_be_instance_of Array
 
       reception.reservations_by_date(Date.new(2018, 3, 25))[0].must_be_instance_of Hotel::Reservation
-
-
-
     end
   end
+
+
 end

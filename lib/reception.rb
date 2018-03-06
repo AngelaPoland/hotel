@@ -1,6 +1,10 @@
 require 'date'
 require 'pry'
 
+require_relative 'reservation'
+require_relative 'room'
+
+
 module Hotel
 
   class Reception

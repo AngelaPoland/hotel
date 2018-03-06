@@ -28,7 +28,7 @@ module Hotel
       return num_of_nights
     end
 
-    #date range method
+    #returns an instance of Range method (will be used in Reception)
     def range
       (start_date..end_date)
     end

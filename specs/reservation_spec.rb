@@ -27,7 +27,7 @@ describe "Reservation" do
 
     it "raises an error for invalid dates" do
       input = {id: 5, start_date: Date.new(2018, 3, 6), end_date: Date.new(2018, 3, 4)}
-    
+
       proc{Hotel::Reservation.new(input)}.must_raise ArgumentError
     end
   end #end of initialize test
@@ -47,6 +47,14 @@ describe "Reservation" do
     reservation = Hotel::Reservation.new(input)
     reservation.cost_of_stay.must_be_instance_of Float
     reservation.cost_of_stay.must_equal 600.00
+    end
+  end
+
+  describe "range" do
+    it "returns a Float" do
+    input = {id: 5, start_date: Date.new(2018, 3, 6), end_date: Date.new(2018, 3, 10)}
+    reservation = Hotel::Reservation.new(input)
+    reservation.range.must_be_instance_of Range
     end
   end
 

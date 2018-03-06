@@ -20,13 +20,28 @@ module Hotel
         start_date: start_date,
         end_date: end_date
       }
-
       new_reservation = Hotel::Reservation.new(reservation_info)
 
       reservations << new_reservation
 
       return new_reservation
     end
+
+
+    def reservations_by_date(date)
+      valid_reservations = []
+      reservations.each do |reservation|
+        if reservation.range.cover? (date)
+          valid_reservations << reservation
+        end
+      end
+      return valid_reservations
+    end
+
+    # def available_rooms_by_date(start_date, end_date)
+    #   rooms.each do |booked_dates|
+    #     if booked_dates.include?
+    # end
 
     # method to stop rooms array from being more than 20 elements long
 

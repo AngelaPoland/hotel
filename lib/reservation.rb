@@ -28,6 +28,11 @@ module Hotel
       return num_of_nights
     end
 
+    #date range method
+    def range
+      (start_date..end_date)
+    end
+
     #method to get cost of stay
     def cost_of_stay
       num_of_nights * 200.00

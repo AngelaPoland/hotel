@@ -5,12 +5,12 @@ module Hotel
 
   class Reservation
 
-    attr_reader :room_num, :cost
-    attr_accessor :id, :start_date, :end_date
+    attr_reader :cost
+    attr_accessor :id, :start_date, :end_date, :room_num
 
     def initialize(input)
       @id = input[:id] # reservation number
-      @room_num = rand(1..20) # room number 1-20
+      @room_num = input[:room_num] # room number 1-20
       @start_date = input[:start_date] # instance of date
       @end_date = input[:end_date] # instance of date
       @cost = cost_of_stay

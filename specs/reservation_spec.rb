@@ -5,19 +5,19 @@ require_relative 'spec_helper'
 describe "Reservation" do
   describe "Initializer" do
     it "is an instance of Reservation" do
-      input = {id: 3, start_date: Date.new(2018, 3, 5), end_date: Date.new(2018, 3, 10) }
+      input = {id: 3, start_date: Date.new(2018, 3, 5), end_date: Date.new(2018, 3, 10), room_num: 3 }
       reservation = Hotel::Reservation.new(input)
       reservation.must_be_kind_of Hotel::Reservation
     end
 
     it "has a start date as instance of time" do
-      input = {id: 4, start_date: Date.new(2018, 3, 5), end_date: Date.new(2018, 3, 10)}
+      input = {id: 4, start_date: Date.new(2018, 3, 5), end_date: Date.new(2018, 3, 10), room_num: 3}
       reservation = Hotel::Reservation.new(input)
       reservation.start_date.must_be_instance_of Date
     end
 
     it "gives an integer 1-20 for room num" do
-      input = {id: 5, start_date: Date.new(2018, 3, 6), end_date: Date.new(2018, 3, 10)}
+      input = {id: 5, start_date: Date.new(2018, 3, 6), end_date: Date.new(2018, 3, 10), room_num: 2}
       reservation = Hotel::Reservation.new(input)
 
       reservation.room_num.must_be_instance_of Integer
@@ -26,7 +26,7 @@ describe "Reservation" do
     end
 
     it "raises an error for invalid dates" do
-      input = {id: 5, start_date: Date.new(2018, 3, 6), end_date: Date.new(2018, 3, 4)}
+      input = {id: 5, start_date: Date.new(2018, 3, 6), end_date: Date.new(2018, 3, 4), room_num: 1}
 
       proc{Hotel::Reservation.new(input)}.must_raise ArgumentError
     end
@@ -34,7 +34,7 @@ describe "Reservation" do
 
   describe "num_of_nights method" do
     it "gives number of nights" do
-    input = {id: 5, start_date: Date.new(2018, 3, 6), end_date: Date.new(2018, 3, 10)}
+    input = {id: 5, start_date: Date.new(2018, 3, 6), end_date: Date.new(2018, 3, 10), room_num: 3}
     reservation = Hotel::Reservation.new(input)
     reservation.num_of_nights.must_be_instance_of Integer
     reservation.num_of_nights.must_equal 3
@@ -43,7 +43,7 @@ describe "Reservation" do
 
   describe "cost_of_stay method" do
     it "returns a Float" do
-    input = {id: 5, start_date: Date.new(2018, 3, 6), end_date: Date.new(2018, 3, 10)}
+    input = {id: 5, start_date: Date.new(2018, 3, 6), end_date: Date.new(2018, 3, 10), room_num: 3}
     reservation = Hotel::Reservation.new(input)
     reservation.cost_of_stay.must_be_instance_of Float
     reservation.cost_of_stay.must_equal 600.00
@@ -52,7 +52,7 @@ describe "Reservation" do
 
   describe "range" do
     it "returns a Float" do
-    input = {id: 5, start_date: Date.new(2018, 3, 6), end_date: Date.new(2018, 3, 10)}
+    input = {id: 5, start_date: Date.new(2018, 3, 6), end_date: Date.new(2018, 3, 10), room_num: 3}
     reservation = Hotel::Reservation.new(input)
     reservation.range.must_be_instance_of Range
     end

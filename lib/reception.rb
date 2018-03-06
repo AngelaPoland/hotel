@@ -17,12 +17,13 @@ module Hotel
 
     end # end of initialize
 
-    def add_reservation(start_date, end_date)
+    def add_reservation(start_date, end_date, room_num)
 
       reservation_info = {
         id: reservations.length + 1,
         start_date: start_date,
-        end_date: end_date
+        end_date: end_date,
+        room_num: room_num
       }
       new_reservation = Hotel::Reservation.new(reservation_info)
 

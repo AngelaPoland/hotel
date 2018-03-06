@@ -8,7 +8,7 @@ module Hotel
 
     def initialize(room_num)
       @room_num = room_num
-      @booked_dates = []
+      @booked_dates = [] # should contains elements of Ranges
 
     end
 

@@ -36,6 +36,19 @@ describe "Reception" do
       reception.add_reservation(start_date, end_date, room_num)
       reception.reservations.length.must_equal 1
     end
+
+    it "shovels a range of dates into the room's booked_dates array" do
+      start_date = Date.new(2018, 3, 7)
+      end_date = Date.new(2018, 3, 10)
+      room_num = 6
+      reception = Hotel::Reception.new
+
+
+      reception.add_reservation(start_date, end_date, room_num)
+      reception.rooms[5].booked_dates.wont_be_empty
+      reception.rooms[5].booked_dates[0].must_be_instance_of Range
+    end
+
   end
 
 
@@ -73,6 +86,5 @@ describe "Reception" do
 
     end
   end
-
 
 end

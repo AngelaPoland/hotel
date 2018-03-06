@@ -17,20 +17,29 @@ module Hotel
 
     end # end of initialize
 
-    def add_reservation(start_date, end_date, room_num)
+    def add_reservation(start_date, end_date, num)
 
       reservation_info = {
         id: reservations.length + 1,
         start_date: start_date,
         end_date: end_date,
-        room_num: room_num
+        room_num: num
       }
       new_reservation = Hotel::Reservation.new(reservation_info)
 
+      @rooms.each do |room|
+        if room.room_num == num
+         room.booked_dates << new_reservation.range
+       end
+      end
+
+
       reservations << new_reservation
+
 
       return new_reservation
     end
+
 
 
     def reservations_by_date(date)

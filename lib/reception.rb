@@ -18,6 +18,7 @@ module Hotel
     end # end of initialize
 
     def add_reservation(start_date, end_date, num)
+      raise ArgumentError.new("Room number passed is invalid.") if num > NUM_OF_ROOMS || num < 0
 
       reservation_info = {
         id: reservations.length + 1,
@@ -32,8 +33,6 @@ module Hotel
          room.booked_dates << new_reservation.range
        end
       end
-
-
       reservations << new_reservation
 
 
@@ -41,7 +40,7 @@ module Hotel
     end
 
 
-
+    #returns all instances of reservations for a given date
     def reservations_by_date(date)
       valid_reservations = []
       reservations.each do |reservation|
@@ -60,20 +59,16 @@ module Hotel
       return all_rooms
     end
 
+    #def available_rooms_by_date
+
 
     # def available_rooms_by_date(start_date, end_date)
     #   rooms.each do |booked_dates|
     #     if booked_dates.include?
     # end
 
-    # method to stop rooms array from being more than 20 elements long
 
     # method to find first available room
-
-    # method to get number of nights staying
-    # method to calculate cost
-
-
 
 
   end #end of class

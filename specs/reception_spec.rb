@@ -49,6 +49,12 @@ describe "Reception" do
       reception.rooms[5].booked_dates[0].must_be_instance_of Range
     end
 
+    it "raises an error if room num is invalid" do
+      reception = Hotel::Reception.new
+      
+      proc{reception.add_reservation(Date.new(2018, 3, 14), Date.new(2018, 3, 18), 30)}.must_raise ArgumentError
+    end
+
   end
 
 

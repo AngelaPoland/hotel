@@ -15,6 +15,7 @@ module Hotel
       @end_date = input[:end_date] # instance of date
       @cost = cost_of_stay
 
+
       if end_date < start_date
           raise ArgumentError.new("Check Out date cannot be before or same as Check In date.")
       end

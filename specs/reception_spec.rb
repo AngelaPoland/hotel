@@ -9,6 +9,13 @@ describe "Reception" do
       reception.must_be_kind_of Hotel::Reception
     end
 
+    it "must contain an array of Rooms" do
+      reception = Hotel::Reception.new
+      reception.rooms.must_be_instance_of Array
+      reception.rooms[0].must_be_instance_of Hotel::Room
+      reception.rooms[19].must_be_instance_of Hotel::Room
+    end
+
   end
 
   describe "add_reservation" do
@@ -46,6 +53,22 @@ describe "Reception" do
       reception.reservations_by_date(Date.new(2018, 3, 25)).must_be_instance_of Array
 
       reception.reservations_by_date(Date.new(2018, 3, 25))[0].must_be_instance_of Hotel::Reservation
+    end
+  end
+
+  describe "all_rooms method" do
+    it "returns an array of rooms" do
+      reception = Hotel::Reception.new
+      reception.all_rooms.must_be_instance_of Array
+      reception.all_rooms[0].must_be_instance_of Hotel::Room
+      reception.all_rooms[19].must_be_instance_of Hotel::Room
+    end
+
+    it "only contains 20 rooms" do
+      reception = Hotel::Reception.new
+      reception.all_rooms.length.wont_be :>, 20
+      reception.all_rooms.length.wont_be :<, 0
+
     end
   end
 

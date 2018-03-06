@@ -13,7 +13,7 @@ module Hotel
 
     def initialize #(input)
       @reservations = []#array of all reservations
-      @rooms = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20]#array of all rooms
+      @rooms = all_rooms
 
     end # end of initialize
 
@@ -41,6 +41,15 @@ module Hotel
       end
       return valid_reservations
     end
+
+    def all_rooms
+      all_rooms = []
+      NUM_OF_ROOMS.times do |i|
+        all_rooms << Hotel::Room.new(i + 1)
+      end
+      return all_rooms
+    end
+
 
     # def available_rooms_by_date(start_date, end_date)
     #   rooms.each do |booked_dates|

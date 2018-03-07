@@ -26,14 +26,14 @@ module Hotel
         id: reservations.length + 1,
         start_date: start_date,
         end_date: end_date,
-        room_num: num
+        room_num: assign_available_room(start_date,end_date)
       }
       new_reservation = Hotel::Reservation.new(reservation_info)
 
       @rooms.each do |room|
         if room.room_num == num
          room.booked_dates << new_reservation.range #.to_a would change range into an array of dates - might consider
-       end
+        end
       end
       reservations << new_reservation
 
@@ -84,14 +84,12 @@ module Hotel
       return available_rooms
     end
 
+    # method to find first available room number
+    def assign_available_room(sd,ed)
+      available_rooms = check_availability(sd,ed)
 
-    # def available_rooms_by_date(start_date, end_date)
-    #   rooms.each do |booked_dates|
-    #     if booked_dates.include?
-    # end
-
-
-    # method to find first available room
+      return available_rooms[0].room_num
+    end
 
 
   end #end of class

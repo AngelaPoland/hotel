@@ -130,4 +130,14 @@ describe "Reception" do
     end
   end
 
+  describe "assign_available_room" do
+    it "returns an integer" do
+      start_date = Date.new(2018, 3, 25)
+      end_date = Date.new(2018, 4, 1)
+      reception = Hotel::Reception.new
+
+      reception.assign_available_room(start_date, end_date).must_be_instance_of Integer
+    end
+  end
+
 end

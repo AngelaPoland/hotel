@@ -17,10 +17,8 @@ module Hotel
 
     end # end of initialize
 
-    def add_reservation(start_date, end_date, num)
+    def add_reservation(start_date, end_date, num) #num isn't going to actually give the room number being assigned anymore, but if I remove it a bunch of previous tests will be mad
       raise ArgumentError.new("Room number passed is invalid.") if num > NUM_OF_ROOMS || num < 0
-
-
 
       reservation_info = {
         id: reservations.length + 1,
@@ -82,7 +80,7 @@ module Hotel
       end
 
       return available_rooms
-    end
+    end #end of check_availability method
 
     # method to find first available room number
     def assign_available_room(sd,ed)

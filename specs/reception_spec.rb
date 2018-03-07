@@ -137,6 +137,9 @@ describe "Reception" do
       reception = Hotel::Reception.new
 
       reception.assign_available_room(start_date, end_date).must_be_instance_of Integer
+
+      reception.assign_available_room(start_date, end_date).wont_be :>, 20
+      reception.assign_available_room(start_date, end_date).wont_be :<, 1
     end
   end
 

@@ -51,10 +51,11 @@ describe "Reservation" do
   end
 
   describe "range" do
-    it "returns a Float" do
+    it "returns a range" do
     input = {id: 5, start_date: Date.new(2018, 3, 6), end_date: Date.new(2018, 3, 10), room_num: 3}
     reservation = Hotel::Reservation.new(input)
     reservation.range.must_be_instance_of Range
+    #binding.pry
     end
   end
 

@@ -125,22 +125,45 @@ describe "Reception" do
       end
       #binding.pry
       proc{reception.check_availability(start_date, Date.new(2018, 3, 30))}.must_raise ArgumentError
+    end
 
+    xit "should not allow more than one instance of the same room in available_rooms" do
+      start_date = Date.new(2018, 3, 25)
+      end_date = Date.new(2018, 4, 1)
+      reception = Hotel::Reception.new
+
+      reception.check_availability(start_date, end_date).wont_include two matching elements
 
     end
   end
 
   describe "assign_available_room" do
-    it "returns an integer" do
+    it "returns an integer 1-20" do
       start_date = Date.new(2018, 3, 25)
       end_date = Date.new(2018, 4, 1)
+      num = 10
       reception = Hotel::Reception.new
 
-      reception.assign_available_room(start_date, end_date).must_be_instance_of Integer
+      reception.assign_available_room(start_date, end_date, num).must_be_instance_of Integer
 
-      reception.assign_available_room(start_date, end_date).wont_be :>, 20
-      reception.assign_available_room(start_date, end_date).wont_be :<, 1
+      reception.assign_available_room(start_date, end_date, 4).wont_be :>, 20
+      reception.assign_available_room(start_date, end_date, 9).wont_be :<, 1
     end
+
+    it "assigns requested room first, otherwise returns first available room" do
+      reception = Hotel::Reception.new
+      start_date = Date.new(2018, 5, 1)
+      end_date = Date.new(2018, 5, 3)
+
+
+      reception.assign_available_room(start_date, end_date, 10).must_equal 10
+      reception.assign_available_room(start_date, end_date, 9).must_equal 9
+
+      reception.add_reservation(start_date, end_date, 10)
+      #binding.pry
+      reception.assign_available_room(start_date, end_date, 10).must_equal 1
+    end
+
   end
 
 end

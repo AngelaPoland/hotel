@@ -17,22 +17,29 @@ module Hotel
 
     end # end of initialize
 
-    def add_reservation(start_date, end_date, num) #num isn't going to actually give the room number being assigned anymore, but if I remove it a bunch of previous tests will be mad
+    def add_reservation(start_date, end_date, num) #num is now redundant - isn't going to actually give the room number being assigned anymore, but if I remove it a bunch of previous tests will be mad
+
+    # OR... perhaps I can make the decision to try to check check_availability of that room num first? if its not available then whichever room IS will be auto assigned?
+
       raise ArgumentError.new("Room number passed is invalid.") if num > NUM_OF_ROOMS || num < 0
+
+
+      booked_room_num = assign_available_room(start_date,end_date, num)
 
       reservation_info = {
         id: reservations.length + 1,
         start_date: start_date,
         end_date: end_date,
-        room_num: assign_available_room(start_date,end_date)
+        room_num: booked_room_num
       }
       new_reservation = Hotel::Reservation.new(reservation_info)
 
       @rooms.each do |room|
-        if room.room_num == num
-         room.booked_dates << new_reservation.range #.to_a would change range into an array of dates - might consider
+        if room.room_num == booked_room_num
+         room.booked_dates << new_reservation.range
         end
       end
+
       reservations << new_reservation
 
 
@@ -59,7 +66,7 @@ module Hotel
       return all_rooms
     end
 
-    # should check date ranges available and return first available room or argument that no dates are available
+    # should check date ranges available and return first available room or argumenterror that no dates are available
     def check_availability(start_date, end_date)
       available_rooms = []
 
@@ -67,6 +74,7 @@ module Hotel
         if room.booked_dates.empty?
           available_rooms << room
         end
+        
         room.booked_dates.each do |range|
           if range.cover?(start_date..end_date) # WHY?!
             next if available_rooms.include? room # just a check so that the same room isn't put into available_rooms more than once
@@ -82,11 +90,18 @@ module Hotel
       return available_rooms
     end #end of check_availability method
 
-    # method to find first available room number
-    def assign_available_room(sd,ed)
+    # method to check if requested room is available otherwise return FIRST available room number
+    def assign_available_room(sd,ed, num)
       available_rooms = check_availability(sd,ed)
 
+      available_rooms.each do |room|
+        if room.room_num == num
+          return room.room_num
+        end
+      end
+
       return available_rooms[0].room_num
+
     end
 
 

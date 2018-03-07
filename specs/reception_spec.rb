@@ -51,7 +51,7 @@ describe "Reception" do
 
     it "raises an error if room num is invalid" do
       reception = Hotel::Reception.new
-      
+
       proc{reception.add_reservation(Date.new(2018, 3, 14), Date.new(2018, 3, 18), 30)}.must_raise ArgumentError
     end
 
@@ -89,6 +89,43 @@ describe "Reception" do
       reception = Hotel::Reception.new
       reception.all_rooms.length.wont_be :>, 20
       reception.all_rooms.length.wont_be :<, 0
+
+    end
+  end
+
+  describe "check_availability" do
+    it "should return an array of available rooms per date range" do
+      start_date = Date.new(2018, 3, 25)
+      end_date = Date.new(2018, 4, 1)
+      reception = Hotel::Reception.new
+
+      reception.add_reservation(start_date, end_date, 1)
+      reception.add_reservation(start_date,Date.new(2018, 3, 27) , 2)
+      reception.add_reservation(start_date,Date.new(2018, 4, 3) , 3)
+      reception.add_reservation(Date.new(2018, 4, 1),Date.new(2018, 4, 3) , 4)
+
+
+
+      reception.check_availability(start_date, end_date).must_be_instance_of Array
+
+      reception.check_availability(start_date, end_date)[0].must_be_instance_of Hotel::Room
+
+      #binding.pry
+
+    end
+    it "should raise argument if no rooms available" do
+      start_date = Date.new(2018, 3, 25)
+      end_date = Date.new(2018, 4, 1)
+      reception = Hotel::Reception.new
+
+      count = 1
+      20.times do
+        reception.add_reservation(start_date, end_date, count)
+        count +=1
+      end
+      #binding.pry
+      proc{reception.check_availability(start_date, Date.new(2018, 3, 30))}.must_raise ArgumentError
+
 
     end
   end

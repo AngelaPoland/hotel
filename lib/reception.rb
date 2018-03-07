@@ -20,6 +20,8 @@ module Hotel
     def add_reservation(start_date, end_date, num)
       raise ArgumentError.new("Room number passed is invalid.") if num > NUM_OF_ROOMS || num < 0
 
+
+
       reservation_info = {
         id: reservations.length + 1,
         start_date: start_date,
@@ -30,7 +32,7 @@ module Hotel
 
       @rooms.each do |room|
         if room.room_num == num
-         room.booked_dates << new_reservation.range
+         room.booked_dates << new_reservation.range #.to_a would change range into an array of dates - might consider
        end
       end
       reservations << new_reservation
@@ -44,7 +46,7 @@ module Hotel
     def reservations_by_date(date)
       valid_reservations = []
       reservations.each do |reservation|
-        if reservation.range.cover? (date)
+        if reservation.range.include? (date)
           valid_reservations << reservation
         end
       end
@@ -59,7 +61,28 @@ module Hotel
       return all_rooms
     end
 
-    #def available_rooms_by_date
+    # should check date ranges available and return first available room or argument that no dates are available
+    def check_availability(start_date, end_date)
+      available_rooms = []
+
+      @rooms.each do |room|
+        if room.booked_dates.empty?
+          available_rooms << room
+        end
+        room.booked_dates.each do |range|
+          if range.cover?(start_date..end_date) # WHY?!
+            next if available_rooms.include? room # just a check so that the same room isn't put into available_rooms more than once
+            available_rooms << room
+          end
+        end
+      end
+
+      if available_rooms.empty?
+        raise ArgumentError.new("No available rooms for those dates.")
+      end
+
+      return available_rooms
+    end
 
 
     # def available_rooms_by_date(start_date, end_date)

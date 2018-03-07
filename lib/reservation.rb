@@ -31,7 +31,7 @@ module Hotel
 
     #returns an instance of Range method (will be used in Reception)
     def range
-      (start_date..end_date)
+      (start_date...end_date) #exclusive date range
     end
 
     #method to get cost of stay

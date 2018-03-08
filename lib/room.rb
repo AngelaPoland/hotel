@@ -4,7 +4,7 @@ module Hotel
 
   class Room
 
-      attr_accessor :room_num, :booked_dates
+    attr_accessor :room_num, :booked_dates
 
     def initialize(room_num)
       @room_num = room_num

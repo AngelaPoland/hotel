@@ -94,53 +94,52 @@ describe "Reception" do
   end
 
   describe "check_availability" do
+    before do
+      @start_date = Date.new(2018, 3, 25)
+      @end_date = Date.new(2018, 4, 1)
+      @reception = Hotel::Reception.new
+    end
+
     it "should return an array of available rooms per date range" do
-      start_date = Date.new(2018, 3, 25)
-      end_date = Date.new(2018, 4, 1)
-      reception = Hotel::Reception.new
 
-      reception.add_reservation(start_date, end_date, 1)
-      reception.add_reservation(start_date,Date.new(2018, 3, 27) , 2)
-      reception.add_reservation(start_date,Date.new(2018, 4, 3) , 3)
-      reception.add_reservation(Date.new(2018, 4, 1),Date.new(2018, 4, 3) , 4)
+      @reception.add_reservation(@start_date, @end_date, 1)
+      @reception.add_reservation(@start_date,Date.new(2018, 3, 27) , 2)
+      @reception.add_reservation(@start_date,Date.new(2018, 4, 3) , 3)
+      @reception.add_reservation(Date.new(2018, 4, 1),Date.new(2018, 4, 3) , 4)
 
 
 
-      reception.check_availability(start_date, end_date).must_be_instance_of Array
+      @reception.check_availability(@start_date, @end_date).must_be_instance_of Array
 
-      reception.check_availability(start_date, end_date)[0].must_be_instance_of Hotel::Room
+      @reception.check_availability(@start_date, @end_date)[0].must_be_instance_of Hotel::Room
 
-      #binding.pry
+      @reception.check_availability(@start_date, @end_date).length.must_equal 18
 
+    #binding.pry
     end
     it "should raise argument if no rooms available" do
-      start_date = Date.new(2018, 3, 25)
-      end_date = Date.new(2018, 4, 1)
-      reception = Hotel::Reception.new
+
 
       count = 1
       20.times do
-        reception.add_reservation(start_date, end_date, count)
+        @reception.add_reservation(@start_date, @end_date, count)
         count +=1
       end
       #binding.pry
-      proc{reception.check_availability(start_date, Date.new(2018, 3, 30))}.must_raise ArgumentError
+      proc{@reception.check_availability(@start_date, Date.new(2018, 3, 30))}.must_raise ArgumentError
     end
 
-    #it "should raise error if room "
+    it "should not allow more than one instance of the same room in available_rooms" do
 
-    # this test was trying to test reception's lines 79-80 check
-    # how to minitest of array contains duplicates?
-    # it "should not allow more than one instance of the same room in available_rooms" do
-    #   start_date = Date.new(2018, 3, 25)
-    #   end_date = Date.new(2018, 4, 1)
-    #   reception = Hotel::Reception.new
-    #
-    #   reception.add_reservation(start_date, end_date, 1)
-    #
-    #   reception.check_availability(start_date, end_date).wont_include Hotel::Room(1)
-    #
-    # end
+
+      @reception.add_reservation(@start_date, @end_date, 1)
+      @reception.add_reservation(@start_date, @end_date, 2)
+      @reception.add_reservation(@start_date, @end_date, 6)
+      @reception.add_reservation(Date.new(2018, 4, 10), Date.new(2018, 4, 15), 1)
+
+
+      @reception.check_availability(@start_date, @end_date).length.must_equal @reception.check_availability(@start_date, @end_date).uniq.length
+    end
   end
 
   describe "assign_available_room" do

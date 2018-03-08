@@ -19,7 +19,7 @@ module Hotel
 
     def add_reservation(start_date, end_date, num) #num is now redundant - isn't going to actually give the room number being assigned anymore, but if I remove it a bunch of previous tests will be mad
 
-    # OR... perhaps I can make the decision to try to check check_availability of that room num first? if its not available then whichever room IS will be auto assigned?
+      # OR... perhaps I can make the decision to try to check check_availability of that room num first? if its not available then whichever room IS will be auto assigned?
 
       raise ArgumentError.new("Room number passed is invalid.") if num > NUM_OF_ROOMS || num < 0
 
@@ -36,7 +36,7 @@ module Hotel
 
       @rooms.each do |room|
         if room.room_num == booked_room_num
-         room.booked_dates << new_reservation.range
+          room.booked_dates << new_reservation.range
         end
       end
 
@@ -73,12 +73,11 @@ module Hotel
       @rooms.each do |room|
         if room.booked_dates.empty?
           available_rooms << room
-        end
-        
-        room.booked_dates.each do |range|
-          if range.cover?(start_date..end_date) # WHY?!
-            next if available_rooms.include? room # just a check so that the same room isn't put into available_rooms more than once
+        elsif room.booked_dates.length > 0
+          room.booked_dates.each do |range|
+            if !(range.include? (end_date - 1)) || !(range.include? start_date)
             available_rooms << room
+            end
           end
         end
       end

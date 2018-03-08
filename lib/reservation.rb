@@ -15,9 +15,8 @@ module Hotel
       @end_date = input[:end_date] # instance of date
       @cost = cost_of_stay
 
-
       if end_date < start_date
-          raise ArgumentError.new("Check Out date cannot be before or same as Check In date.")
+        raise ArgumentError.new("Check Out date cannot be before or same as Check In date.")
       end
 
     end # end of initialize
@@ -25,7 +24,6 @@ module Hotel
     #method to get number of nights to be paid for
     def num_of_nights
       num_of_nights = (end_date - start_date).to_i
-      
     end
 
     #returns an instance of Range method (will be used in Reception)

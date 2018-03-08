@@ -127,14 +127,20 @@ describe "Reception" do
       proc{reception.check_availability(start_date, Date.new(2018, 3, 30))}.must_raise ArgumentError
     end
 
-    xit "should not allow more than one instance of the same room in available_rooms" do
-      start_date = Date.new(2018, 3, 25)
-      end_date = Date.new(2018, 4, 1)
-      reception = Hotel::Reception.new
+    #it "should raise error if room "
 
-      reception.check_availability(start_date, end_date).wont_include two matching elements
-
-    end
+    # this test was trying to test reception's lines 79-80 check
+    # how to minitest of array contains duplicates?
+    # it "should not allow more than one instance of the same room in available_rooms" do
+    #   start_date = Date.new(2018, 3, 25)
+    #   end_date = Date.new(2018, 4, 1)
+    #   reception = Hotel::Reception.new
+    #
+    #   reception.add_reservation(start_date, end_date, 1)
+    #
+    #   reception.check_availability(start_date, end_date).wont_include Hotel::Room(1)
+    #
+    # end
   end
 
   describe "assign_available_room" do

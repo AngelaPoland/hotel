@@ -5,8 +5,8 @@ module Hotel
 
   class Reservation
 
-    attr_reader :cost
-    attr_accessor :id, :start_date, :end_date, :room_num
+    attr_reader :cost, :id, :start_date, :end_date, :room_num
+    #attr_accessor :id, :start_date, :end_date, :room_num
 
     def initialize(input)
       @id = input[:id] # reservation number
@@ -24,9 +24,8 @@ module Hotel
 
     #method to get number of nights to be paid for
     def num_of_nights
-      days = (end_date - start_date).to_i
-      num_of_nights = days - 1
-      return num_of_nights
+      num_of_nights = (end_date - start_date).to_i
+      
     end
 
     #returns an instance of Range method (will be used in Reception)

@@ -37,7 +37,7 @@ describe "Reservation" do
     input = {id: 5, start_date: Date.new(2018, 3, 6), end_date: Date.new(2018, 3, 10), room_num: 3}
     reservation = Hotel::Reservation.new(input)
     reservation.num_of_nights.must_be_instance_of Integer
-    reservation.num_of_nights.must_equal 3
+    reservation.num_of_nights.must_equal 4
     end
   end
 
@@ -46,7 +46,28 @@ describe "Reservation" do
     input = {id: 5, start_date: Date.new(2018, 3, 6), end_date: Date.new(2018, 3, 10), room_num: 3}
     reservation = Hotel::Reservation.new(input)
     reservation.cost_of_stay.must_be_instance_of Float
-    reservation.cost_of_stay.must_equal 600.00
+    end
+
+    it "returns the total cost of stay" do
+
+    input = {id: 5, start_date: Date.new(2018, 3, 6), end_date: Date.new(2018, 3, 10), room_num: 3}
+    reservation = Hotel::Reservation.new(input)
+    reservation.cost_of_stay.must_be_instance_of Float
+    reservation.cost_of_stay.must_equal 800.00
+
+
+    input2 = {id: 5, start_date: Date.new(2018, 3, 6), end_date: Date.new(2018, 3, 7), room_num: 4}
+    reservation2 = Hotel::Reservation.new(input2)
+    reservation2.cost_of_stay.must_equal 200.00
+
+    input3 = {id: 10, start_date: Date.new(2018, 3, 6), end_date: Date.new(2018, 3, 9), room_num: 10}
+    reservation3 = Hotel::Reservation.new(input3)
+    reservation3.cost_of_stay.must_equal 600.00
+
+    input4 = {id: 11, start_date: Date.new(2018, 3, 6), end_date: Date.new(2018, 3, 8), room_num: 11}
+    reservation4 = Hotel::Reservation.new(input4)
+    reservation4.cost_of_stay.must_equal 400.00
+
     end
   end
 

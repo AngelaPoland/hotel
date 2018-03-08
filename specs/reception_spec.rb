@@ -55,6 +55,16 @@ describe "Reception" do
       proc{reception.add_reservation(Date.new(2018, 3, 14), Date.new(2018, 3, 18), 30)}.must_raise ArgumentError
     end
 
+    it "raises an error if start/end dates are not valid Date objects" do
+      reception = Hotel::Reception.new
+
+      proc{reception.add_reservation("2018-04-03", Date.new(2018, 3, 18), 11)}.must_raise ArgumentError
+
+      proc{reception.add_reservation(5,3,12)}.must_raise ArgumentError
+
+      proc{reception.add_reservation(Date.new(2018, 3, 14), [2018, 04, 01], 19)}.must_raise ArgumentError
+
+    end
   end
 
 

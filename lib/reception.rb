@@ -23,6 +23,8 @@ module Hotel
 
       raise ArgumentError.new("Room number passed is invalid.") if num > NUM_OF_ROOMS || num < 0
 
+      raise ArgumentError.new("Date entered is not valid") if !(start_date.instance_of? Date) || !(end_date.instance_of? Date)
+
 
       booked_room_num = assign_available_room(start_date,end_date, num)
 

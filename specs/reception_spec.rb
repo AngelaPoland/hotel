@@ -195,12 +195,12 @@ describe "Reception" do
       reception = Hotel::Reception.new
 
       new_block = reception.create_block(Date.new(2018, 10, 20), Date.new(2018, 10, 22), 4)
-      binding.pry
+     #binding.pry
       new_block.blocked_rooms.length.must_equal 4
 
     end
 
-    
+
 
   end
 

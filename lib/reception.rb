@@ -18,7 +18,6 @@ module Hotel
 
     end # end of initialize
 
-    # TODO: update add_reservation to check blocked_reservations
     def add_reservation(start_date, end_date, num)
 
       raise ArgumentError.new("Room number passed is invalid.") if num > NUM_OF_ROOMS || num < 0
@@ -50,12 +49,12 @@ module Hotel
 
 
 
+    #check if block can be created with dates/num needed
+
     # takes check_in date, check_out date, num of rooms being requested
     def create_block(sd, ed, num)
-      # compare with any other block reservations date Ranges
-      # compare with single reservations date ranges/Rooms
       # select which rooms will be used in block
-      # add range to all room's booked_dates
+      # add range to all room's booked_dates (so that can't be booked by public on those dates)
 
       new_block = Hotel::Block.new(sd, ed, num)
 
@@ -63,12 +62,9 @@ module Hotel
       assigned_room = check_availability(sd, ed).last
       reservation = add_reservation(sd, ed, assigned_room.room_num)
       new_block.blocked_rooms << reservation.room_num
-        @rooms.each do |room|
-          if reservation.room_num == room.room_num
-          room.booked_dates << new_block.range
-          end
-        end
       end
+
+      @block_reservations << new_block
 
       return new_block
     end #end of create_block

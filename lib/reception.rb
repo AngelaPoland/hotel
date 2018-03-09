@@ -17,9 +17,7 @@ module Hotel
 
     end # end of initialize
 
-    def add_reservation(start_date, end_date, num) #num is now redundant - isn't going to actually give the room number being assigned anymore, but if I remove it a bunch of previous tests will be mad
-
-      # OR... perhaps I can make the decision to try to check check_availability of that room num first? if its not available then whichever room IS will be auto assigned?
+    def add_reservation(start_date, end_date, num)
 
       raise ArgumentError.new("Room number passed is invalid.") if num > NUM_OF_ROOMS || num < 0
 
@@ -44,7 +42,6 @@ module Hotel
 
       reservations << new_reservation
 
-
       return new_reservation
     end
 
@@ -68,7 +65,7 @@ module Hotel
       return all_rooms
     end
 
-    # should check date ranges available and return first available room or argumenterror that no dates are available
+    #returns an array of available rooms based on dates
     def check_availability(start_date, end_date)
       available_rooms = []
 

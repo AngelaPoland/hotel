@@ -4,16 +4,20 @@ require_relative 'spec_helper'
 
 describe "Reception" do
   describe "Initializer" do
+    before do
+      @reception = Hotel::Reception.new
+    end
+
     it "is an instance of Reception" do
-      reception = Hotel::Reception.new
-      reception.must_be_kind_of Hotel::Reception
+
+      @reception.must_be_kind_of Hotel::Reception
     end
 
     it "must contain an array of Rooms" do
-      reception = Hotel::Reception.new
-      reception.rooms.must_be_instance_of Array
-      reception.rooms[0].must_be_instance_of Hotel::Room
-      reception.rooms[19].must_be_instance_of Hotel::Room
+
+      @reception.rooms.must_be_instance_of Array
+      @reception.rooms[0].must_be_instance_of Hotel::Room
+      @reception.rooms[19].must_be_instance_of Hotel::Room
     end
 
   end
@@ -115,17 +119,16 @@ describe "Reception" do
       @reception.add_reservation(@start_date, @end_date, 1)
       @reception.add_reservation(@start_date,Date.new(2018, 3, 27) , 2)
       @reception.add_reservation(@start_date,Date.new(2018, 4, 3) , 3)
-      @reception.add_reservation(Date.new(2018, 4, 1),Date.new(2018, 4, 3) , 4)
-
-
+      @reception.add_reservation(Date.new(2018, 3, 20),Date.new(2018, 4, 3) , 4)
+      @reception.add_reservation(Date.new(2018, 4, 1),Date.new(2018, 4, 3) , 5)
 
       @reception.check_availability(@start_date, @end_date).must_be_instance_of Array
 
       @reception.check_availability(@start_date, @end_date)[0].must_be_instance_of Hotel::Room
 
-      @reception.check_availability(@start_date, @end_date).length.must_equal 18
+      @reception.check_availability(@start_date, @end_date).length.must_equal 17
 
-    #binding.pry
+      #binding.pry
     end
     it "should raise argument if no rooms available" do
 

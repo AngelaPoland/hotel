@@ -9,14 +9,16 @@ module Hotel
 
   class Reception
 
-    attr_accessor :reservations, :rooms
+    attr_reader :reservations, :rooms, :block_reservations
 
     def initialize #(input)
       @reservations = []#array of all reservations
       @rooms = all_rooms
+      @block_reservations = []
 
     end # end of initialize
 
+    # TODO: update add_reservation to check blocked_reservations
     def add_reservation(start_date, end_date, num)
 
       raise ArgumentError.new("Room number passed is invalid.") if num > NUM_OF_ROOMS || num < 0
@@ -43,7 +45,35 @@ module Hotel
       reservations << new_reservation
 
       return new_reservation
-    end
+    end # end of add_reservation
+
+
+
+
+    # takes check_in date, check_out date, num of rooms being requested
+    def create_block(sd, ed, num)
+      # compare with any other block reservations date Ranges
+      # compare with single reservations date ranges/Rooms
+      # select which rooms will be used in block
+      # add range to all room's booked_dates
+
+      new_block = Hotel::Block.new(sd, ed, num)
+
+      num.times do
+      assigned_room = check_availability(sd, ed).last
+      reservation = add_reservation(sd, ed, assigned_room.room_num)
+      new_block.blocked_rooms << reservation.room_num
+        @rooms.each do |room|
+          if reservation.room_num == room.room_num
+          room.booked_dates << new_block.range
+          end
+        end
+      end
+
+      return new_block
+    end #end of create_block
+
+
 
 
     #returns all instances of reservations for a given date
@@ -70,7 +100,7 @@ module Hotel
       available_rooms = []
 
       @rooms.each do |room|
-        if room.booked_dates.empty?
+        if room.booked_dates.empty? #&& room.blocked_dates.empty?
           available_rooms << room
         elsif room.booked_dates.length > 0
           room.booked_dates.each do |range|

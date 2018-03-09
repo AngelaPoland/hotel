@@ -184,4 +184,24 @@ describe "Reception" do
 
   end
 
+  describe "create_block method" do
+    it "returns an instance of Block" do
+      reception = Hotel::Reception.new
+
+      reception.create_block(Date.new(2018, 10, 20), Date.new(2018, 10, 22), 4).must_be_instance_of Hotel::Block
+    end
+
+    it "only assigns the requested amount of rooms" do
+      reception = Hotel::Reception.new
+
+      new_block = reception.create_block(Date.new(2018, 10, 20), Date.new(2018, 10, 22), 4)
+      binding.pry
+      new_block.blocked_rooms.length.must_equal 4
+
+    end
+
+    
+
+  end
+
 end

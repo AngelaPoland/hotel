@@ -11,10 +11,8 @@ module Hotel
 
       raise ArgumentError.new("You can only have a maximum of 5 rooms in a block.") if num >= 6
 
-      #@date_range = (start_date...end_date)
       @blocked_rooms = [] #array of room_nums per date range requested
       @num = num
-      @cost = num * 150.00 #of full block
       @start_date = start_date
       @end_date = end_date
       @reserved_rooms = []
@@ -23,10 +21,9 @@ module Hotel
     end
 
     def range
-      (@start_date...@end_date) #exclusive date range
+      (@start_date...@end_date)
     end
 
-    #this will reserve one room at a time from the block
     def reserve
       if reserved_rooms.length < @num
         reserved_rooms << blocked_rooms[0]
@@ -34,8 +31,6 @@ module Hotel
         raise ArgumentError.new("No more rooms available for this block.")
       end
     end
-
-
 
   end
 end

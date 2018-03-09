@@ -47,30 +47,22 @@ module Hotel
     end # end of add_reservation
 
 
-
-
-    #check if block can be created with dates/num needed
-
-    # takes check_in date, check_out date, num of rooms being requested
     def create_block(sd, ed, num)
-      # select which rooms will be used in block
-      # add range to all room's booked_dates (so that can't be booked by public on those dates)
+
 
       new_block = Hotel::Block.new(sd, ed, num)
 
       num.times do
-      assigned_room = check_availability(sd, ed).last
-      reservation = add_reservation(sd, ed, assigned_room.room_num)
-      new_block.blocked_rooms << reservation.room_num
+        assigned_room = check_availability(sd, ed).sample
+        reservation = add_reservation(sd, ed, assigned_room.room_num)
+        #assigned_room.booked_dates << new_block.range
+        new_block.blocked_rooms << assigned_room.room_num
       end
 
       @block_reservations << new_block
 
       return new_block
     end #end of create_block
-
-
-
 
     #returns all instances of reservations for a given date
     def reservations_by_date(date)
@@ -101,7 +93,7 @@ module Hotel
         elsif room.booked_dates.length > 0
           room.booked_dates.each do |range|
             if !(range.include? (end_date - 1)) || !(range.include? start_date)
-            available_rooms << room
+              available_rooms << room
             end
           end
         end
@@ -125,7 +117,6 @@ module Hotel
       end
 
       return available_rooms[0].room_num
-
     end
 
 

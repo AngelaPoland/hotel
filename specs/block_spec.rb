@@ -59,4 +59,13 @@ describe "Block" do
 
   end
 
+  describe "range method" do
+    it "gives a valid date range" do
+      start_date = Date.new(2018, 6, 20)
+      end_date = Date.new(2018, 6, 25)
+      block = Hotel::Block.new(start_date, end_date, 3)
+      block.range.must_be_instance_of Range
+    end
+  end
+
 end

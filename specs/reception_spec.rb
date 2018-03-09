@@ -195,12 +195,20 @@ describe "Reception" do
       reception = Hotel::Reception.new
 
       new_block = reception.create_block(Date.new(2018, 10, 20), Date.new(2018, 10, 22), 4)
-     #binding.pry
+      #binding.pry
       new_block.blocked_rooms.length.must_equal 4
-
     end
 
+    it "adds the Block to blocked_reservations array" do
+      reception = Hotel::Reception.new
+      reception.create_block(Date.new(2018, 12, 1), Date.new(2018, 12, 06), 5)
+      reception.block_reservations.length.must_equal 1
+      reception.block_reservations[0].must_be_instance_of Hotel::Block
 
+      reception.create_block(Date.new(2018, 11, 4), Date.new(2018, 11, 7), 3)
+      reception.block_reservations.length.must_equal 2
+      #binding.pry
+    end
 
   end
 

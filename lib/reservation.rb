@@ -18,7 +18,6 @@ module Hotel
       if end_date < start_date
         raise ArgumentError.new("Check Out date cannot be before or same as Check In date.")
       end
-
     end # end of initialize
 
     #method to get number of nights to be paid for

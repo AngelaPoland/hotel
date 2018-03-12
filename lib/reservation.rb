@@ -35,6 +35,5 @@ module Hotel
       num_of_nights * 200.00
     end
 
-
   end #end of class
 end #end of module

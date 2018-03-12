@@ -210,6 +210,21 @@ describe "Reception" do
       #binding.pry
     end
 
+    it "assigns unique room numbers to blocked rooms array" do
+      reception = Hotel::Reception.new
+      #binding.pry
+      reception.create_block(Date.new(2018, 12, 1), Date.new(2018, 12, 06), 5)
+
+
+      reception.block_reservations[0].blocked_rooms[0].wont_equal reception.block_reservations[0].blocked_rooms[1]
+      #binding.pry
+
+      # TODO: change these to check uniq on array
+      reception.create_block(Date.new(2018, 11, 4), Date.new(2018, 11, 7), 3)
+      #binding.pry
+      reception.block_reservations[1].blocked_rooms[0].wont_equal reception.block_reservations[1].blocked_rooms[1]
+    end
+
   end
 
 end

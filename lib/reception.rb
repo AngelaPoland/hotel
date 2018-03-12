@@ -37,6 +37,7 @@ module Hotel
 
       @rooms.each do |room|
         if room.room_num == booked_room_num
+
           room.booked_dates << new_reservation.range
         end
       end
@@ -51,9 +52,10 @@ module Hotel
 
 
       new_block = Hotel::Block.new(sd, ed, num)
+      available_rooms = check_availability(sd, ed)
 
       num.times do
-        assigned_room = check_availability(sd, ed).sample
+        assigned_room = available_rooms.pop
         reservation = add_reservation(sd, ed, assigned_room.room_num)
         #assigned_room.booked_dates << new_block.range
         new_block.blocked_rooms << assigned_room.room_num

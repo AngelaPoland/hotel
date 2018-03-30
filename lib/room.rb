@@ -1,7 +1,5 @@
 module Hotel
 
-  NUM_OF_ROOMS = 20
-
   class Room
 
     attr_accessor :booked_dates
@@ -9,7 +7,7 @@ module Hotel
 
     def initialize(room_num)
       @room_num = room_num
-      @booked_dates = [] # should contain elements of Date Ranges
+      #@booked_dates = [] # should contain elements of Date Ranges
     end
 
   end

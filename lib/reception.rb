@@ -7,6 +7,8 @@ require_relative 'room'
 
 module Hotel
 
+  NUM_OF_ROOMS = 20
+
   class Reception
 
     attr_reader :reservations, :rooms, :block_reservations
@@ -35,12 +37,13 @@ module Hotel
       }
       new_reservation = Hotel::Reservation.new(reservation_info)
 
-      @rooms.each do |room|
-        if room.room_num == booked_room_num
-
-          room.booked_dates << new_reservation.range
-        end
-      end
+      # took this out since Room class no longer holds booked_dates
+      # @rooms.each do |room|
+      #   if room.room_num == booked_room_num
+      #
+      #     room.booked_dates << new_reservation.range
+      #   end
+      # end
 
       reservations << new_reservation
 
@@ -56,9 +59,9 @@ module Hotel
 
       num.times do
         assigned_room = available_rooms.pop
-        reservation = add_reservation(sd, ed, assigned_room.room_num)
+        @reservations << add_reservation(sd, ed, assigned_room)
         #assigned_room.booked_dates << new_block.range
-        new_block.blocked_rooms << assigned_room.room_num
+        new_block.blocked_rooms << assigned_room
       end
 
       @block_reservations << new_block
@@ -88,16 +91,28 @@ module Hotel
     #returns an array of available rooms based on dates
     def check_availability(start_date, end_date)
       available_rooms = []
+      NUM_OF_ROOMS.times do |num|
+        available_rooms << num + 1
+      end
 
-      @rooms.each do |room|
-        if room.booked_dates.empty? #&& room.blocked_dates.empty?
-          available_rooms << room
-        elsif room.booked_dates.length > 0
-          room.booked_dates.each do |range|
-            if !(range.include? (end_date - 1)) || !(range.include? start_date)
-              available_rooms << room
-            end
-          end
+
+      # @rooms.each do |room|
+      #   if room.booked_dates.empty? #&& room.blocked_dates.empty?
+      #     available_rooms << room
+      #   elsif room.booked_dates.length > 0
+      #     room.booked_dates.each do |range|
+      #       if !(range.include? (end_date - 1)) || !(range.include? start_date)
+      #         available_rooms << room
+      #       end
+      #     end
+      #   end
+      # end
+
+      @reservations.each do |reservation|
+        range = (reservation.start_date...reservation.end_date)
+        num = reservation.room_num
+        if (range.include? (end_date - 1)) || (range.include? (start_date))
+          available_rooms.delete(num)
         end
       end
 
@@ -113,12 +128,12 @@ module Hotel
       available_rooms = check_availability(sd,ed)
 
       available_rooms.each do |room|
-        if room.room_num == num
-          return room.room_num
+        if room == num
+          return room
         end
       end
 
-      return available_rooms[0].room_num
+      return available_rooms[0]
     end
 
 

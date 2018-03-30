@@ -10,10 +10,10 @@ describe "Room" do
       room.must_be_kind_of Hotel::Room
     end
 
-    it "has an array of booked_dates" do
-      room = Hotel::Room.new(3)
-      room.booked_dates.must_be_instance_of Array
-    end
+    # it "has an array of booked_dates" do
+    #   room = Hotel::Room.new(3)
+    #   room.booked_dates.must_be_instance_of Array
+    # end
 
   end
 end

@@ -41,17 +41,17 @@ describe "Reception" do
       reception.reservations.length.must_equal 1
     end
 
-    it "shovels a range of dates into the room's booked_dates array" do
-      start_date = Date.new(2018, 3, 7)
-      end_date = Date.new(2018, 3, 10)
-      room_num = 6
-      reception = Hotel::Reception.new
-
-
-      reception.add_reservation(start_date, end_date, room_num)
-      reception.rooms[5].booked_dates.wont_be_empty
-      reception.rooms[5].booked_dates[0].must_be_instance_of Range
-    end
+    # it "shovels a range of dates into the room's booked_dates array" do
+    #   start_date = Date.new(2018, 3, 7)
+    #   end_date = Date.new(2018, 3, 10)
+    #   room_num = 6
+    #   reception = Hotel::Reception.new
+    #
+    #
+    #   reception.add_reservation(start_date, end_date, room_num)
+    #   reception.rooms[5].booked_dates.wont_be_empty
+    #   reception.rooms[5].booked_dates[0].must_be_instance_of Range
+    # end
 
     it "raises an error if room num is invalid" do
       reception = Hotel::Reception.new
@@ -124,9 +124,11 @@ describe "Reception" do
 
       @reception.check_availability(@start_date, @end_date).must_be_instance_of Array
 
-      @reception.check_availability(@start_date, @end_date)[0].must_be_instance_of Hotel::Room
+      @reception.check_availability(@start_date, @end_date)[0].must_be_instance_of Integer
 
-      @reception.check_availability(@start_date, @end_date).length.must_equal 17
+      #binding.pry
+
+      @reception.check_availability(@start_date, @end_date).length.must_equal 16
 
       #binding.pry
     end
